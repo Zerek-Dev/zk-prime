@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { background: #0a0a0a; color: #fff }
+
+.btn-gold { background: linear-gradient(90deg,#D4AF37,#E6C47C); color: #0a0a0a }

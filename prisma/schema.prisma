@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String?
+  email      String   @unique
+  image      String?
+  password   String?
+  role       String   @default("user")
+  createdAt  DateTime @default(now())
+  views      View[]
+}
+
+model Movie {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  year        Int?
+  coverImage  String?
+  videoUrl    String?
+  uploadedAt  DateTime @default(now())
+  isFeatured  Boolean  @default(false)
+  views       View[]
+}
+
+model View {
+  id        String   @id @default(cuid())
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  movieId   String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  duration  Int?
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
